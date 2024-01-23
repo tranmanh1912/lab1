@@ -7,66 +7,172 @@
   </head>
   <body>
     <script>
-        // Dữ liệu từ API
-const game = {
-  team1: 'Bayern Munich',
-  team2: 'Borrussia Dortmund',
-  players: [['Neuer', 'Pavard', 'Lucas', 'Hernandez', 'Davies', 'Kimmich', 'Goretzka', 'Coman', 'Muller', 'Gnarby', 'Lewandowski'], ['Burki', 'Schulz', 'Hummels', 'Akanji', 'Hakimi', 'Weigl', 'Witsel', 'Hazard', 'Brandt', 'Sancho', 'Gotze']],
-  score: '4:0',
-  scored: ['Davies', 'Muller', 'Lewandowski', 'Kimmich'],
-  date: 'Nov 9th, 2077',
-  odds: {
-    team1: 1.33,
-    x: 3.25,
-    team2: 6.5,
-  },
+      // Dữ liệu từ API
+      const game = {
+        team1: "Bayern Munich",
+        team2: "Borrussia Dortmund",
+        players: [
+          [
+            "Neuer",
+            "Pavard",
+            "Lucas",
+            "Hernandez",
+            "Davies",
+            "Kimmich",
+            "Goretzka",
+            "Coman",
+            "Muller",
+            "Gnarby",
+            "Lewandowski",
+          ],
+          [
+            "Burki",
+            "Schulz",
+            "Hummels",
+            "Akanji",
+            "Hakimi",
+            "Weigl",
+            "Witsel",
+            "Hazard",
+            "Brandt",
+            "Sancho",
+            "Gotze",
+          ],
+        ],
+        score: "4:0",
+        scored: ["Davies", "Muller", "Lewandowski", "Kimmich"],
+        date: "Nov 9th, 2077",
+        odds: {
+          team1: 1.33,
+          x: 3.25,
+          team2: 6.5,
+        },
+      };
+
+      // LAB1.1
+      // Task 1
+      const [players1, players2] = game.players;
+
+      // Task 2
+      const [gk, ...fieldPlayers] = players1;
+      const [gk2, ...fieldPlayers2] = players2;
+
+      // Task 3
+      const allPlayers = [...players1, ...players2];
+
+      // Task 4
+      const players1Final = [...players1, "Thiago", "Coutinho", "Perisic"];
+
+      // Task 5
+      const { team1, x: draw, team2 } = game.odds;
+
+      // Task 6
+      // Task 6
+      const printGoals = function (...players) {
+        players.forEach((player, i) => console.log(`Goal ${i + 1}: ${player}`));
+      };
+      printGoals(...game.scored);
+
+      // Task 7
+      const winner =
+        (game.odds.team1 < game.odds.team2 && game.team1) ||
+        (game.odds.team1 > game.odds.team2 && game.team2);
+      console.log(`winner team: ${winner}`);
+
+      // LAB1.2
+      // Task 1
+      game.scored.forEach((player, i) =>
+        console.log(`Goal ${i + 1}: ${player}`)
+      );
+
+      // Task 2
+      const tb = (game.odds.team1 + game.odds.x + game.odds.team2) / 3;
+      // Task 3
+      console.log(`Tỉ lệ thắng của ${game.team1}: ${game.odds.team1}`);
+      console.log(`Tỉ lệ hòa: ${game.odds.x}`);
+      console.log(`Tỉ lệ thắng của ${game.team2}: ${game.odds.team2}`);
+
+      // Task 3 (Thêm)
+      const scorers = {};
+      game.scored.forEach((player) => {
+        scorers[player] ? scorers[player]++ : (scorers[player] = 1);
+      });
+      console.log(scorers);
+
+      //lab2
+
+      // LAB 2.1
+      const events = [
+        [5, "Goal"],
+        [23, "Substitution"],
+        [34, "Yellow Card"],
+        [64, "Red Card"],
+        [80, "Goal"],
+      ];
+
+      // Task 1
+      const uniqueEvents = [...new Set(events.map((event) => event[1]))];
+
+      // Task 2
+      const indexToRemove = events.findIndex(
+        (event) => event[0] === 64 && event[1] === "Yellow Card"
+      );
+      if (indexToRemove !== -1) {
+        events.splice(indexToRemove, 1);
+      }
+
+      // Task 3
+      const totalEvents = events.length;
+      const averageEventsPerMinute = totalEvents / 90;
+
+      console.log(
+        `${totalEvents} events occurred, averaging one every ${Math.round(
+          90 / averageEventsPerMinute
+        )} minutes.`
+      );
+
+      // Task 4
+      events.forEach((event) => {
+        const [minute, action] = event;
+        const half = minute <= 45 ? "FIRST HALF" : "SECOND HALF";
+        console.log(`[${half}] ${minute}: ⚽ ${action}`);
+      });
+
+      // LAB 2.2
+const convertToCamelCase = input => {
+  return input
+    .toLowerCase()
+    .replace(/_(\w)/g, (match, p1) => p1.toUpperCase());
 };
 
-// LAB1.1
-// Task 1
-const [players1, players2] = game.players;
+console.log(convertToCamelCase('underscore_case')); // underscoreCase
+console.log(convertToCamelCase('first_name')); // firstName
+console.log(convertToCamelCase('Some_Variable')); // someVariable
+console.log(convertToCamelCase('calculate_AGE')); // calculateAge
+console.log(convertToCamelCase('delayed_departure')); // delayedDeparture
 
-// Task 2
-const [gk, ...fieldPlayers] = players1;
-const [gk2, ...fieldPlayers2] = players2;
 
-// Task 3
-const allPlayers = [...players1, ...players2];
+// LAB 2.3
+const flights =
+  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
-// Task 4
-const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
+const getCode = str => str.slice(0, 3).toUpperCase();
 
-// Task 5
-const { team1, x: draw, team2 } = game.odds;
+for (const flight of flights.split('+')) {
+  const [type, from, to, time] = flight.split(';');
+  const output = `${type.startsWith('_Delayed') ? '🛑' : ''}${type.replaceAll('_', ' ')} ${getCode(from)} ${getCode(to)} (${time.replace(':', 'h')})`.padStart(36);
+  console.log(output);
+}
 
-// Task 6
-    // Task 6
-const printGoals = function (...players) {
-  players.forEach((player, i) => console.log(`Goal ${i + 1}: ${player}`));
-};
-printGoals(...game.scored);
 
-// Task 7
-const winner = game.odds.team1 < game.odds.team2 && game.team1 || game.odds.team1 > game.odds.team2 && game.team2;
-console.log (`winner team: ${winner}`);
-
-// LAB1.2
-// Task 1
-game.scored.forEach((player, i) => console.log(`Goal ${i + 1}: ${player}`));
-
-// Task 2
-const tb = (game.odds.team1 + game.odds.x + game.odds.team2) / 3;
-// Task 3
-console.log(`Tỉ lệ thắng của ${game.team1}: ${game.odds.team1}`);
-console.log(`Tỉ lệ hòa: ${game.odds.x}`);
-console.log(`Tỉ lệ thắng của ${game.team2}: ${game.odds.team2}`);
-
-// Task 3 (Thêm)
-const scorers = {};
-game.scored.forEach((player) => {
-  scorers[player] ? scorers[player]++ : (scorers[player] = 1);
-});
-console.log(scorers);
+// LAB 2.4
+(function () {
+  const header = document.querySelector('h1');
+  header.style.color = 'red';
+  document.querySelector('body').addEventListener('click', function () {
+    header.style.color = 'blue';
+  });
+})();
 
     </script>
   </body>
